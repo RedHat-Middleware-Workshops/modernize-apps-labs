@@ -1,0 +1,6 @@
+{
+  "MONOLITH": true,
+  "API_ENDPOINT": "",
+  "SECURE_API_ENDPOINT": "",
+  "SSO_ENABLED": false
+}
