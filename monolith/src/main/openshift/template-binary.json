@@ -120,7 +120,7 @@
                         "from": {
                             "kind": "ImageStreamTag",
                             "namespace": "${IMAGE_STREAM_NAMESPACE}",
-                            "name": "jboss-eap70-openshift:1.5"
+                            "name": "jboss-eap70-openshift:1.6"
                         }
                     }
                 },
@@ -276,6 +276,10 @@
                                 {
                                     "name": "TX_DATABASE_PREFIX_MAPPING",
                                     "value": "coolstore-postgresql=DB"
+                                },
+                                {
+                                    "name": "MQ_TOPICS",
+                                    "value": "orders"
                                 },
                                 {
                                     "name": "OPENSHIFT_KUBE_PING_LABELS",
@@ -453,6 +457,14 @@
                                 {
                                     "name": "POSTGRESQL_DATABASE",
                                     "value": "monolith"
+                                },
+                                {
+                                    "name": "POSTGRESQL_MAX_CONNECTIONS",
+                                    "value": "100"
+                                },
+                                {
+                                    "name": "POSTGRESQL_MAX_PREPARED_TRANSACTIONS",
+                                    "value": "100"
                                 }
                             ] 
                         }]

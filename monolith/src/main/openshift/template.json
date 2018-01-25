@@ -122,7 +122,7 @@
                         "from": {
                             "kind": "ImageStreamTag",
                             "namespace": "${IMAGE_STREAM_NAMESPACE}",
-                            "name": "jboss-eap70-openshift:1.5"
+                            "name": "jboss-eap70-openshift:1.6"
                         }
                     }
                 },
@@ -320,6 +320,10 @@
                                     "value": "mykeystorepass"
                                 },
                                 {
+                                    "name": "MQ_TOPICS",
+                                    "value": "orders"
+                                },
+                                {
                                     "name": "MQ_CLUSTER_PASSWORD",
                                     "value": "coolstore123"
                                 },
@@ -463,6 +467,14 @@
                                 {
                                     "name": "POSTGRESQL_DATABASE",
                                     "value": "monolith"
+                                },
+                                {
+                                    "name": "POSTGRESQL_MAX_CONNECTIONS",
+                                    "value": "100"
+                                },
+                                {
+                                    "name": "POSTGRESQL_MAX_PREPARED_TRANSACTIONS",
+                                    "value": "100"
                                 }
                             ] 
                         }]

@@ -39,4 +39,11 @@ public class CatalogService {
         return em.find(CatalogItemEntity.class, itemId);
     }
 
+    public void updateInventoryItems(String itemId, int deducts) {
+        InventoryEntity inventoryEntity = getCatalogItemById(itemId).getInventory();
+        int currentQuantity = inventoryEntity.getQuantity();
+        inventoryEntity.setQuantity(currentQuantity-deducts);
+        em.merge(inventoryEntity);
+    }
+
 }

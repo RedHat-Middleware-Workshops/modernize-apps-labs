@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: ${project.artifactId}
+spec:
+  template:
+    spec:
+      containers:
+        - env:
+            - name: JAVA_OPTIONS
+              value: "-Dvertx.profiles.active=openshift"

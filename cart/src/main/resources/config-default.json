@@ -1,0 +1,7 @@
+{
+    "http.port" : 8082,
+    "catalog.service.port" : 8081,
+    "catalog.service.hostname" : "localhost",
+    "catalog.service.timeout" : 3000
+
+}

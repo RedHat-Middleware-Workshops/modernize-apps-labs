@@ -7,81 +7,34 @@
     <artifactId>monolith</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>monolith</name>
-    <repositories>
-        <repository>
-            <id>jboss-maven-repository</id>
-            <name>JBoss Maven Repository</name>
-            <url>http://maven.repository.redhat.com/ga/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>apache-maven-repository</id>
-            <name>Apache Maven Repository</name>
-            <url>http://repo.maven.apache.org/maven2/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jboss-maven-repository</id>
-            <name>JBoss Maven Repository</name>
-            <url>http://maven.repository.redhat.com/ga/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>apache-maven-repository</id>
-            <name>Apache Maven Repository</name>
-            <url>http://repo.maven.apache.org/maven2/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+    <name>coolstore-monolith</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-        <hystrix.version>1.5.1</hystrix.version>
         <project.encoding>UTF-8</project.encoding>
-        <version.postgresql>9.4.1207</version.postgresql>
-        <!-- configurem m2e facets -->
-        <m2e.jaxrs.activation>false</m2e.jaxrs.activation>
-        <m2e.jpa.activation>false</m2e.jpa.activation>
-        <m2e.jsf.activation>false</m2e.jsf.activation>
         <maven.test.skip>true</maven.test.skip>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+    </dependencies>
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -95,21 +48,42 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
-                            <filtering>true</filtering>
-                            <targetPath>WEB-INF</targetPath>
-                        </resource>
-                    </webResources>
-                </configuration>
+                <version>3.2.0</version>
             </plugin>
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.1.0.Final</version>
+                <version>1.2.1.Final</version>
+                <configuration>
+                    <jboss-home>${env.JBOSS_HOME}</jboss-home>
+                    <server-config>standalone-full.xml</server-config>
+                    <resources>
+                        <resource>
+                            <addIfAbsent>true</addIfAbsent>
+                            <address>subsystem=datasources,data-source=CoolstoreDS</address>
+                            <properties>
+                                <jndi-name>java:jboss/datasources/CoolstoreDS</jndi-name>
+                                <enabled>true</enabled>
+                                <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
+                                <driver-class>org.h2.Driver</driver-class>
+                                <driver-name>h2</driver-name>
+                                <user-name>sa</user-name>
+                                <password>sa</password>
+                            </properties>
+                        </resource>
+                        <resource>
+                            <address>subsystem=messaging-activemq,server=default,jms-topic=orders</address>
+                            <properties>
+                                <entries>!!["topic/orders"]</entries>
+                            </properties>
+                        </resource>
+                    </resources>
+                    <server-args>
+                        <server-arg>-Djboss.https.port=8888</server-arg>
+                        <server-arg>-Djboss.bind.address=0.0.0.0</server-arg>
+                    </server-args>
+                    <javaOpts>-Djava.net.preferIPv4Stack=true</javaOpts>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -137,51 +111,4 @@
             </build>
         </profile>
     </profiles>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-eap-javaee7</artifactId>
-                <version>7.0.0.GA</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.9</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.6.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${version.postgresql}</version>
-        </dependency>
-    </dependencies>
 </project>

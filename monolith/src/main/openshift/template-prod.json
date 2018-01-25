@@ -49,18 +49,6 @@
             "required": false
         },
         {
-            "displayName": "PostgreSQL Maximum number of connections",
-            "description": "The maximum number of client connections allowed. This also sets the maximum number of prepared transactions.",
-            "name": "POSTGRESQL_MAX_CONNECTIONS",
-            "required": false
-        },
-        {
-            "displayName": "PostgreSQL Shared Buffers",
-            "description": "Configures how much memory is dedicated to PostgreSQL for caching data.",
-            "name": "POSTGRESQL_SHARED_BUFFERS",
-            "required": false
-        },
-        {
             "displayName": "A-MQ cluster password",
             "description": "A-MQ cluster admin password",
             "name": "MQ_CLUSTER_PASSWORD",
@@ -412,6 +400,10 @@
                                     "value": "mykeystorepass"
                                 },
                                 {
+                                    "name": "MQ_TOPICS",
+                                    "value": "orders"
+                                },
+                                {
                                     "name": "MQ_CLUSTER_PASSWORD",
                                     "value": "${MQ_CLUSTER_PASSWORD}"
                                 },
@@ -562,15 +554,11 @@
                                 },
                                 {
                                     "name": "POSTGRESQL_MAX_CONNECTIONS",
-                                    "value": "${POSTGRESQL_MAX_CONNECTIONS}"
+                                    "value": "100"
                                 },
                                 {
                                     "name": "POSTGRESQL_MAX_PREPARED_TRANSACTIONS",
-                                    "value": "${POSTGRESQL_MAX_CONNECTIONS}"
-                                },
-                                {
-                                    "name": "POSTGRESQL_SHARED_BUFFERS",
-                                    "value": "${POSTGRESQL_SHARED_BUFFERS}"
+                                    "value": "100"
                                 }
                             ]
                         }]
