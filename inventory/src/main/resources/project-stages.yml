@@ -1,0 +1,20 @@
+swarm:
+  datasources:
+    data-sources:
+      InventoryDS:
+        driver-name: postgresql
+        connection-url: jdbc:postgresql://localhost:5432/inventory
+#        user-name: swarm
+#        password: password
+---
+project:
+    stage: development
+swarm:
+  logging: INFO
+  datasources:
+    data-sources:
+      InventoryDS:
+        driver-name: h2
+        connection-url: jdbc:h2:mem:inventory;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        user-name: sa
+        password: sa

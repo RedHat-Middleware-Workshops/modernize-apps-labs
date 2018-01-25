@@ -1,6 +1,7 @@
 package com.redhat.coolstore.service;
 
 import com.redhat.coolstore.model.CatalogItemEntity;
+import com.redhat.coolstore.model.InventoryEntity;
 import com.redhat.coolstore.model.Product;
 import com.redhat.coolstore.utils.Transformers;
 
@@ -28,6 +29,8 @@ public class ProductService {
         CatalogItemEntity entity = cm.getCatalogItemById(itemId);
         if (entity == null)
             return null;
+
+        // Return the entity
         return Transformers.toProduct(entity);
     }
 

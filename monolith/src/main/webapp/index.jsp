@@ -33,6 +33,7 @@ request.getSession(true);
 	<script src="/app/controllers/controllers.js"></script>
 	<script src="/app/services/cart.js"></script>
 	<script src="/app/services/catalog.js"></script>
+	<script src="/app/services/orders.js"></script>
 	<script src="/app/directives/header.js"></script>
 	<link rel="stylesheet" href="/app/css/coolstore.css" />
 

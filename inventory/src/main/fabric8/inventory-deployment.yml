@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: ${project.artifactId}
+spec:
+  template:
+    spec:
+      containers:
+        - env:
+            - name: "INVENTORY_DB_USERNAME"
+              valueFrom:
+                 secretKeyRef:
+                   name: inventory-database-secret
+                   key: user
+            - name: "INVENTORY_DB_PASSWORD"
+              valueFrom:
+                 secretKeyRef:
+                   name: inventory-database-secret
+                   key: password
+            - name: JAVA_OPTIONS
+              value: "-Djava.net.preferIPv4Stack=true -Dswarm.datasources.data-sources.InventoryDS.user-name=${env.INVENTORY_DB_USERNAME} -Dswarm.datasources.data-sources.InventoryDS.password=${env.INVENTORY_DB_PASSWORD} -Dswarm.datasources.data-sources.InventoryDS.connection-url=jdbc:postgresql://inventory-database:5432/inventory"

@@ -7,12 +7,12 @@
             "iconClass": "icon-jboss",
             "tags": "eap,postgresql,javaee,java,database,jboss,xpaas",
             "version": "1.0.0",
-            "openshift.io/display-name": "Red Hat Demos - Coolstore Monnolith using binary build"
+            "openshift.io/display-name": "Coolstore Monolith using binary build"
         },
-        "name": "coolstore-monolith-binary-demo"
+        "name": "coolstore-monolith-binary-build"
     },
     "labels": {
-        "template": "coolstore-monolith-binary-demo"
+        "template": "coolstore-monolith-binary-build"
     },
     "message": "The resources (build config, deploy config, service, imagestreams, etc) for running the Coolstore Monolith demo has been created in your project. To deploy the application go to your source directoy and build that code using mvn -Popenshift package and then start the build using oc start-build coolstore --from-file=deployments/ROOT.war.",
     "parameters": [
@@ -120,7 +120,7 @@
                         "from": {
                             "kind": "ImageStreamTag",
                             "namespace": "${IMAGE_STREAM_NAMESPACE}",
-                            "name": "jboss-eap70-openshift:1.5"
+                            "name": "jboss-eap70-openshift:1.6"
                         }
                     }
                 },
@@ -276,6 +276,10 @@
                                 {
                                     "name": "TX_DATABASE_PREFIX_MAPPING",
                                     "value": "coolstore-postgresql=DB"
+                                },
+                                {
+                                    "name": "MQ_TOPICS",
+                                    "value": "orders"
                                 },
                                 {
                                     "name": "OPENSHIFT_KUBE_PING_LABELS",
@@ -453,6 +457,14 @@
                                 {
                                     "name": "POSTGRESQL_DATABASE",
                                     "value": "monolith"
+                                },
+                                {
+                                    "name": "POSTGRESQL_MAX_CONNECTIONS",
+                                    "value": "100"
+                                },
+                                {
+                                    "name": "POSTGRESQL_MAX_PREPARED_TRANSACTIONS",
+                                    "value": "100"
                                 }
                             ] 
                         }]
@@ -494,12 +506,12 @@
                 "name": "ci_admin"
             },
             "groupNames": [
-                "system:serviceaccounts:ci"
+                "system:serviceaccounts:coolstore-prod"
             ],
             "subjects": [
                 {
                     "kind": "SystemGroup",
-                    "name": "system:serviceaccounts:ci"
+                    "name": "system:serviceaccounts:coolstore-prod"
                 }
             ],
             "roleRef": {

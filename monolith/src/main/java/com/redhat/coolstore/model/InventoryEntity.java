@@ -1,17 +1,18 @@
 package com.redhat.coolstore.model;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
 @Table(name = "INVENTORY", uniqueConstraints = @UniqueConstraint(columnNames = "itemId"))
 public class InventoryEntity implements Serializable {
-
-
-
 
     @Id
     private String itemId;

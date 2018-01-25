@@ -4,9 +4,13 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.FlywayException;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,11 +19,14 @@ import java.util.logging.Logger;
  */
 @Singleton
 @Startup
+@TransactionManagement(TransactionManagementType.BEAN)
 public class DataBaseMigrationStartup {
 
     @Inject
     Logger logger;
 
+    @Resource(mappedName = "java:jboss/datasources/CoolstoreDS")
+    DataSource dataSource;
 
     @PostConstruct
     private void startup() {
@@ -27,26 +34,9 @@ public class DataBaseMigrationStartup {
 
         try {
             logger.info("Initializing/migrating the database using FlyWay");
-            String serviceName = System.getenv("DB_SERVICE_PREFIX_MAPPING");
-            serviceName = serviceName.substring(0,serviceName.lastIndexOf("=DB")).toUpperCase().replace("-","_");
-            String servicePort = System.getenv(String.format("%s_SERVICE_PORT",serviceName));
-            String serviceHost = System.getenv(String.format("%s_SERVICE_HOST",serviceName));
-            String database = System.getenv("DB_DATABASE");
-            String dbConnUrl = String.format("jdbc:postgresql://%s:%s/%s",serviceHost,servicePort,database);
-            logger.info("JDBC connection string used for FlyWay is " + dbConnUrl);
-            String dbUser = System.getenv("DB_USERNAME");
-            String dbPassword = System.getenv("DB_PASSWORD");
-
-            // Create the Flyway instance
             Flyway flyway = new Flyway();
-
-
-
-            // Point it to the database
-            flyway.setDataSource(dbConnUrl, dbUser, dbPassword);
-
+            flyway.setDataSource(dataSource);
             flyway.baseline();
-
             // Start the db.migration
             flyway.migrate();
         } catch (FlywayException e) {

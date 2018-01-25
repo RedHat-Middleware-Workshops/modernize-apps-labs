@@ -34,7 +34,7 @@ public class ProductEndpoint implements Serializable {
 
     @GET
     @Path("/{itemId}")
-    public Product getCart(@PathParam("itemId") String itemId) {
+    public Product getProduct(@PathParam("itemId") String itemId) {
         return pm.getProductByItemId(itemId);
     }
 

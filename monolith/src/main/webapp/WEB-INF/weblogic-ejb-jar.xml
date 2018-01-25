@@ -1,0 +1,10 @@
+<weblogic-ejb-jar xmlns="http://www.bea.com/ns/weblogic/910" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.bea.com/ns/weblogic/910 http://www.bea.com/ns/weblogic/910/weblogic-ejb-jar.xsd">
+
+<weblogic-enterprise-bean>
+        <ejb-name>InventoryNotificationMDB</ejb-name>
+        <transaction-descriptor>
+            <trans-timeout-seconds>30</trans-timeout-seconds>
+        </transaction-descriptor>
+    </weblogic-enterprise-bean>
+</weblogic-ejb-jar>

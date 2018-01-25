@@ -1,14 +1,19 @@
 package com.redhat.coolstore.service;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-
+import javax.annotation.Resource;
 import javax.ejb.Stateful;
+import javax.inject.Inject;
+import javax.jms.JMSContext;
+import javax.jms.Topic;
 
-import com.redhat.coolstore.model.*;
+import com.redhat.coolstore.model.Product;
+import com.redhat.coolstore.model.ShoppingCart;
+import com.redhat.coolstore.model.ShoppingCartItem;
+import com.redhat.coolstore.utils.Transformers;
 
 @Stateful
 public class ShoppingCartService {
@@ -25,6 +30,12 @@ public class ShoppingCartService {
     @Inject
     PromoService ps;
 
+    @Inject
+    private transient JMSContext context;
+
+    @Resource(lookup = "java:/topic/orders")
+    private Topic ordersTopic;
+
     private Map<String, ShoppingCart> carts = new HashMap<>(); //Each user can have multiple shopping carts (tabbed browsing)
 
     public ShoppingCartService() {
@@ -38,6 +49,14 @@ public class ShoppingCartService {
         } else {
             return carts.get(cartId);
         }
+    }
+
+    public ShoppingCart checkOutShoppingCart(String cartId) {
+        ShoppingCart cart = this.getShoppingCart(cartId);
+        context.createProducer().send(ordersTopic, Transformers.shoppingCartToJson(cart));
+        cart.resetShoppingCartItemList();
+        priceShoppingCart(cart);
+        return cart;
     }
 
     public void priceShoppingCart(ShoppingCart sc) {
