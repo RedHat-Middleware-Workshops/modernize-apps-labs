@@ -7,9 +7,11 @@
     <artifactId>cart</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <properties>
-        <vertx.version>3.5.0</vertx.version>
+        <vertx.version>3.4.2.redhat-006</vertx.version>
         <java.version>1.8</java.version>
-        <vertx-maven-plugin.version>1.0.9</vertx-maven-plugin.version>
+        <vertx-maven-plugin.version>1.0.13</vertx-maven-plugin.version>
+        <fabric8-maven-plugin.version>3.5.30</fabric8-maven-plugin.version>
+        <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift</fabric8.generator.from>
         <vertx.verticle>com.redhat.coolstore.MainVerticle</vertx.verticle>
     </properties>
     <dependencyManagement>
@@ -102,6 +104,7 @@
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>fabric8-maven-plugin</artifactId>
+                        <version>${fabric8-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>fmp</id>
