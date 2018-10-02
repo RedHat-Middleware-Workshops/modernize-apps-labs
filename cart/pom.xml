@@ -10,7 +10,7 @@
         <vertx.version>3.4.2.redhat-006</vertx.version>
         <java.version>1.8</java.version>
         <vertx-maven-plugin.version>1.0.13</vertx-maven-plugin.version>
-        <fabric8-maven-plugin.version>3.5.37</fabric8-maven-plugin.version>
+        <fabric8-maven-plugin.version>3.5.41</fabric8-maven-plugin.version>
         <vertx.verticle>com.redhat.coolstore.CartServiceVerticle</vertx.verticle>
         <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift</fabric8.generator.from>
     </properties>
