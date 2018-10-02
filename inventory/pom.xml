@@ -40,7 +40,7 @@
         <jdk.min.version>${maven.compiler.source}</jdk.min.version>
 
         <fabric8.version>2.2.205</fabric8.version>
-        <fabric8.maven.plugin.version>3.5.37</fabric8.maven.plugin.version>
+        <fabric8.maven.plugin.version>3.5.41</fabric8.maven.plugin.version>
         <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
         </fabric8.generator.from>
 
