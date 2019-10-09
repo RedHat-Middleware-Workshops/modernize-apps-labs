@@ -31,12 +31,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-        <fabric8-maven-plugin.version>3.5.41</fabric8-maven-plugin.version>
-        <spring-boot.bom.version>1.5.8.Final-redhat-1</spring-boot.bom.version>
-        <postgresql.version>9.4.1212</postgresql.version>
-        <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
-        <netflix.feign.version>8.15.1</netflix.feign.version>
-	<fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.5</fabric8.generator.from>
+        <fabric8-maven-plugin.version>3.5.42</fabric8-maven-plugin.version>
+        <spring-boot.bom.version>2.1.6.SP3-redhat-00001</spring-boot.bom.version>
+        <spring-cloud.bom.version>Greenwich.SR3</spring-cloud.bom.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6</fabric8.generator.from>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -44,6 +43,14 @@
                 <groupId>me.snowdrop</groupId>
                 <artifactId>spring-boot-bom</artifactId>
                 <version>${spring-boot.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -57,7 +64,7 @@
 
 <!-- TODO: Add web (tomcat) dependency here -->
 
-<!-- TODO: Add data jpa dependency here -->
+<!-- TODO: Add jdbc dependency here -->
 
 <!-- TODO: Add actuator, feign and hystrix dependency here -->
 
@@ -76,7 +83,6 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.8.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -125,7 +131,6 @@
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
-                    <version>${postgresql.version}</version>
                 </dependency>
             </dependencies>
             <build>
