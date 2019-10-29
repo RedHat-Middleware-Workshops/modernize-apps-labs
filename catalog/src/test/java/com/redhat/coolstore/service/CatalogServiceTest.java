@@ -1,34 +1,29 @@
 package com.redhat.coolstore.service;
 
-import com.redhat.coolstore.model.Inventory;
-import com.redhat.coolstore.model.Product;
-import io.specto.hoverfly.junit.dsl.HttpBodyConverter;
-import io.specto.hoverfly.junit.rule.HoverflyRule;
-import org.junit.ClassRule;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
 import static io.specto.hoverfly.junit.core.SimulationSource.dsl;
 import static io.specto.hoverfly.junit.dsl.HoverflyDsl.service;
 import static io.specto.hoverfly.junit.dsl.HttpBodyConverter.json;
 import static io.specto.hoverfly.junit.dsl.ResponseCreators.success;
-import static io.specto.hoverfly.junit.dsl.ResponseCreators.serverError;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.startsWith;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.junit.ClassRule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.redhat.coolstore.model.Inventory;
+import com.redhat.coolstore.model.Product;
+import io.specto.hoverfly.junit.rule.HoverflyRule;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 public class CatalogServiceTest {
-
     @Autowired
     CatalogService catalogService;
 
@@ -57,12 +52,12 @@ public class CatalogServiceTest {
 
     @Test
     public void read() throws Exception {
-        Product p1 = catalogService.read("444434");
+        Product p1 = this.catalogService.read("444434");
         assertThat(p1).isNotNull();
         assertThat(p1.getName()).as("Verify product name").isEqualTo("Pebble Smart Watch");
         assertThat(p1.getQuantity()).as("Verify quantity").isEqualTo(73);
 
-        Product p2 = catalogService.read("329299");
+        Product p2 = this.catalogService.read("329299");
         assertThat(p2).isNotNull();
         assertThat(p2.getName()).as("Verify product name").isEqualTo("Red Fedora");
         assertThat(p2.getQuantity()).as("Verify quantity").isEqualTo(98); //TODO: Replace with Fallback value
@@ -72,7 +67,7 @@ public class CatalogServiceTest {
 
     @Test
     public void readAll() throws Exception {
-        List<Product> productList = catalogService.readAll();
+        List<Product> productList = this.catalogService.readAll();
         assertThat(productList).isNotNull();
         assertThat(productList).isNotEmpty();
         List<String> names = productList.stream().map(Product::getName).collect(Collectors.toList());
