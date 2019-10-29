@@ -7,15 +7,15 @@ spec:
     spec:
       containers:
         - env:
-            - name: DB_USERNAME
+            - name: SPRING_PROFILES_ACTIVE
+              value: openshift
+            - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
-                 secretKeyRef:
-                   name: catalog-database-secret
-                   key: user
-            - name: DB_PASSWORD
+                secretKeyRef:
+                  name: catalog-database-secret
+                  key: user
+            - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
-                 secretKeyRef:
-                   name: catalog-database-secret
-                   key: password
-            - name: JAVA_OPTIONS
-              value: "-Dspring.profiles.active=openshift"
+                secretKeyRef:
+                  name: catalog-database-secret
+                  key: password
