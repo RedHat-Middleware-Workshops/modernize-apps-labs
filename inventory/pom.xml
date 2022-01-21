@@ -48,7 +48,7 @@
         <version.resteasy>3.0.19.Final</version.resteasy>
         <version.override.jackson>2.7.7</version.override.jackson>
 
-        <version.h2>1.4.187</version.h2>
+        <version.h2>2.1.210</version.h2>
         <version.resteasy>3.0.19.Final</version.resteasy>
         <version.postgresql>9.4.1207</version.postgresql>
 
