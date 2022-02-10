@@ -50,7 +50,7 @@
 
         <version.h2>1.4.187</version.h2>
         <version.resteasy>3.0.19.Final</version.resteasy>
-        <version.postgresql>9.4.1207</version.postgresql>
+        <version.postgresql>42.2.25</version.postgresql>
 
         <maven.test.skip>true</maven.test.skip>
     </properties>
